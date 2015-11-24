@@ -5,8 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/tareas');
+
+// require('./models/Tareas');
+
+
+
 
 var routes = require('./routes/index');
+var ejemplo = require('./modules/ejemplo/server/controllers/ejemplo.server.controller');
 var users = require('./routes/users');
 var panel = require('./routes/panel')
 
@@ -27,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'modules')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
+app.use('/ejemplo', ejemplo);
 app.use('/panel', panel);
 app.use('/users', users);
 

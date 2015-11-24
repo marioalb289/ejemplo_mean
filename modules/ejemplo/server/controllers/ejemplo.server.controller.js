@@ -1,11 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
-/*Conexion con base de datos*/
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/tareas');
-require('../models/Tareas');
+// /*Conexion con base de datos*/
+// var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/tareas');
+// require('../models/Tareas');
 /********/
+// var Tareas = mongoose.model('Tareas');
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+var mongoose = require('mongoose');
+require('../models/Tareas');
 var Tareas = mongoose.model('Tareas');
 
 //GET - Listar tareas

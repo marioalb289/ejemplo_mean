@@ -1,14 +1,14 @@
-angular.module('appTareas', ['ui.router'])
+angular.module('ejemplo.client.controller', ['ui.router'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('alta', {
                 url: '/alta',
-                templateUrl: 'ejemplo/client/views/alta.html',
+                templateUrl: 'client/views/alta.html',
                 controller: 'ctrlAlta'
             })
             .state('editar', {
                 url: '/editar',
-                templateUrl: 'ejemplo/client/views/editar.html',
+                templateUrl: 'client/views/editar.html',
                 controller: 'ctrlEditar'
             });
 
@@ -23,7 +23,7 @@ angular.module('appTareas', ['ui.router'])
 
         /***Sección de métodos remotos***/
         comun.getAll = function(){
-            return $http.get('/tareas')
+            return $http.get('/ejemplo/tareas')
             .success(function(data){
                 angular.copy(data, comun.tareas)
 
@@ -32,14 +32,14 @@ angular.module('appTareas', ['ui.router'])
         }
 
         comun.add = function(tarea){
-            return $http.post('/tarea', tarea)
+            return $http.post('/ejemplo/tarea', tarea)
             .success(function(tarea){
                 comun.tareas.push(tarea);
             })
         }
 
         comun.update = function(tarea){
-            return $http.put('/tarea/' + tarea._id, tarea)
+            return $http.put('/ejemplo/tarea/' + tarea._id, tarea)
             .success(function(data){
                 var indice = comun.tareas.indexOf(tarea);
                 comun.tareas[indice] = data;
@@ -47,7 +47,7 @@ angular.module('appTareas', ['ui.router'])
         }
 
         comun.delete = function(tarea){
-            return $http.delete('/tarea/' + tarea._id)
+            return $http.delete('/ejemplo/tarea/' + tarea._id)
             .success(function(){
                 var indice = comun.tareas.indexOf(tarea);
                 comun.tareas.splice(indice, 1);
