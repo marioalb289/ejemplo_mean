@@ -14,10 +14,10 @@ mongoose.connect('mongodb://localhost/tareas');
 
 
 
-var routes = require('./routes/index');
+// var routes = require('./routes/index');
 var ejemplo = require('./modules/ejemplo/server/controllers/ejemplo.server.controller');
+var panel = require('./modules/panel/server/controllers/panel.server.controller');
 var users = require('./routes/users');
-var panel = require('./routes/panel')
 
 var app = express();
 
@@ -35,9 +35,9 @@ app.use(express.static(path.join(__dirname, 'modules')));
 //para definir los directorios de las librerias de bootstrap y angylar
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-app.use('/', routes);
+app.use('/', panel);
 app.use('/ejemplo', ejemplo);
-app.use('/panel', panel);
+// app.use('/panel', panel);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
