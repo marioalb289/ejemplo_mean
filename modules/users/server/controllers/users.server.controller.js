@@ -1,61 +1,47 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
+var Usuarios = require('../models/Usuarios');
 
-// /*Conexion con base de datos*/
-// var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/tareas');
-// require('../models/Tareas');
-/********/
-// var Tareas = mongoose.model('Tareas');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('users', { title: 'Express' });
+  res.render('users', { user: req.user });
 });
 
-// var mongoose = require('mongoose');
-// require('../models/Tareas');
-// var Tareas = mongoose.model('Tareas');
+router.get('/register', function(req, res) {
+    res.render('register', { });
+});
 
-// //GET - Listar tareas
-// router.get('/tareas', function(req, res, next){
-//     Tareas.find(function(err, tareas){
-//         if(err){return next(err)}
+router.post('/register', function(req, res) {
+    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register', { account : account });
+        }
 
-//         res.json(tareas)
-//     })
-// })
+        passport.authenticate('local')(req, res, function () {
+            res.redirect('/');
+        });
+    });
+});
 
-// //POST - Agregar tarea
-// router.post('/tarea', function(req, res, next){
-//     var tarea = new Tareas(req.body);
+router.get('/login', function(req, res) {
+    res.render('login', { user : req.user });
+});
 
-//     tarea.save(function(err, tarea){
-//          if(err){return next(err)}
-//             res.json(tarea);
-//     })
-// })
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
 
-// //PUT - Actualizar tarea
-// router.put('/tarea/:id', function(req, res){
-//     Tareas.findById(req.params.id, function(err, tarea){
-//         tarea.nombre = req.body.nombre;
-//         tarea.prioridad = req.body.prioridad;
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 
-//         tarea.save(function(err){
-//             if(err){res.send(err)}
-            
-//             res.json(tarea);
-//         })
-//     })
-// })
+router.get('/ping', function(req, res){
+    res.status(200).send("pong!");
+});
 
-// //DELETE - Eliminar Tarea
-// router.delete('/tarea/:id', function(req, res){
-//     Tareas.findByIdAndRemove(req.params.id, function(err){
-//         if(err){res.send(err)}
-//             res.json({message: 'La tarea se ha eliminado'});
-//     })
-// })
+
 
 module.exports = router;

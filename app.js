@@ -9,6 +9,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/tareas');
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 // require('./models/Tareas');
 
 
@@ -32,6 +35,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'modules')));
 //para definir los directorios de las librerias de bootstrap y angylar
 app.use(express.static(path.join(__dirname, 'bower_components')));
@@ -42,6 +55,12 @@ app.use('/', login);
 app.use('/ejemplo', ejemplo);
 // app.use('/panel', panel);
 app.use('/users', users);
+
+// passport config
+var Usuarios = require('./modules/users/server/models/Usuarios');
+passport.use(new LocalStrategy(Usuarios.authenticate()));
+passport.serializeUser(Usuarios.serializeUser());
+passport.deserializeUser(Usuarios.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
