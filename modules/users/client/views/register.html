@@ -11,11 +11,8 @@
           <input type="password" id="password" name="password" class="form-control" ng-model="usuario.password" placeholder="Password" required>
         </div>
         <div class="text-center form-group">
-          <button type="submit" ng-click="findUser()" class="btn btn-primary">Sign in</button>
-        </div>
-        <div class="text-center forgot-password">
-          <a ui-sref="password.forgot">Olvidaste tu contraseña?</a>
-          <a ui-sref="register">Nuevo Usuario</a>
+          <button type="submit" ng-click="registerUser()" class="btn btn-primary">Registrar</button>
+          <!-- <a href="/"><button type="button" class="btn btn-primary">Cancel</button></a> -->
         </div>
       </fieldset>
     </form>
