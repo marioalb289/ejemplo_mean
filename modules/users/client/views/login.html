@@ -1,7 +1,10 @@
 <div >
   <div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
-    <form name="userForm" class="signin" novalidate autocomplete="off">
+    <form name="userForm" class="signin" action="/login" method="post" novalidate autocomplete="off">
       <fieldset>
+      <% for(var i in messages) { %>
+         <div class="flash"><%= messages[i] %></div>
+      <% } %>
         <div class="form-group" show-errors>
           <label for="username" >Username</label>
           <input type="text" id="username" name="username" class="form-control" ng-model="usuario.user"  placeholder="Username" lowercase required>
@@ -11,11 +14,10 @@
           <input type="password" id="password" name="password" class="form-control" ng-model="usuario.password" placeholder="Password" required>
         </div>
         <div class="text-center form-group">
-          <button type="submit" ng-click="findUser()" class="btn btn-primary">Sign in</button>
+          <input type="submit" class="btn btn-primary" value="Sign In" />
         </div>
         <div class="text-center forgot-password">
-          <a ui-sref="password.forgot">Olvidaste tu contraseña?</a>
-          <a ui-sref="register">Nuevo Usuario</a>
+          <a ui-sref="register">Registrar Usuario</a>
         </div>
       </fieldset>
     </form>

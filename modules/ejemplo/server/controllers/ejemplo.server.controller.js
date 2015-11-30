@@ -1,4 +1,5 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
 
 // /*Conexion con base de datos*/
@@ -10,7 +11,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('ejemplo', { title: 'Express' });
+    console.log(req.user);
+    if(! req.user){
+      res.redirect('../login');
+      
+    }else{
+      res.render('ejemplo', { title: 'Express' });
+    }
+  
 });
 
 var mongoose = require('mongoose');

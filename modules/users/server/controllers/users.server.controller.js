@@ -6,7 +6,13 @@ var Usuarios = require('../models/Usuarios');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('users', { user: req.user });
+  if(! req.user){
+    res.redirect('/login');
+    
+  }else{
+    res.redirect('/ejemplo');
+  }
+  // res.render('users', { user: req.user });
 });
 
 router.get('/register', function(req, res) {
@@ -26,7 +32,7 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-    res.render('login', { user : req.user });
+    res.render('users', { user : req.user });
 });
 
 router.post('/login', function(req, res, next) {
@@ -38,7 +44,8 @@ router.post('/login', function(req, res, next) {
     if (! user) {
       return res.send({ success : false, message : 'authentication failed' });
     }
-    return res.send({ success : true, message : 'authentication succeeded' });
+    console.log(user);
+    return  res.redirect('/ejemplo');
   })(req, res, next);
 });
 
