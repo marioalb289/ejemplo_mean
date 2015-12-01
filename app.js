@@ -61,7 +61,7 @@ passport.deserializeUser(Usuarios.deserializeUser());
 // app.use('/', panel);
 app.use('/', login);
 
-// app.use('/panel', panel);
+app.use('/panel', panel);
 app.use('/users', users);
 app.use('/ejemplo', ejemplo);
 
